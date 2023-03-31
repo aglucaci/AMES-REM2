@@ -1,1 +1,1 @@
-# Ancestral (Sequence Reconstruction) Molecular Evolution and Structure
+# Ancestral (Sequence Reconstruction), Molecular Evolution, and Structure
