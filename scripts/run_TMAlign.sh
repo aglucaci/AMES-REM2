@@ -1,3 +1,5 @@
+
+# From the local directory.
 f=(*.pdb)
 
 mkdir -p TMAlignResults

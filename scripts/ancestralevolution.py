@@ -11,6 +11,7 @@ import numpy as np
 import os
 import json
 import argparse
+from Bio import SeqIO
 #import altair as alt
 #!pip install ete3
 #from ete3 import Tree
@@ -76,14 +77,11 @@ for species in data["branch attributes"]["0"].keys():
   print("# Adding:", species)
   data_dict_DNA[species] = "".join(data["branch attributes"]["0"][species]["codon"][0])
   data_dict_AA[species] = "".join(data["branch attributes"]["0"][species]["amino-acid"][0])
-  
-
 #end for
 
 print("Completed loading")
 
 # Output DNA Fasta file and AA file
-from Bio import SeqIO
 with open(args.output_dna, 'w') as handle:
     #    SeqIO.write(data_dict_DNA.values(), handle, 'fasta')
     for k in data_dict_DNA:
