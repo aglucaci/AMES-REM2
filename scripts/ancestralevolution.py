@@ -23,7 +23,9 @@ print("We are operating out of base directory:", BASEDIR)
 parser = argparse.ArgumentParser()
 parser.add_argument('--slac_json', default='', help='Input SLAC JSON file location', required=True)
 parser.add_argument('--output_dna', default='', help='Output Codon/DNA FASTA file location', required=True)
-parser.add_argument('--output_aa', default='', help='Input Amino-Acid FASTA file location', required=True)
+parser.add_argument('--output_aa', default='', help='Output Amino-Acid FASTA file location', required=True)
+parser.add_argument('--output_msa', default='', help='Output Multiple sequence alignment FASTA file location', required=True)
+
 args = parser.parse_args()
 
 SLAC_JSON = os.path.join(BASEDIR, args.slac_json)
@@ -64,11 +66,9 @@ num_sites     = data["input"]["number of sites"]
 #node_order    = [node.name for node in t.traverse("preorder")]
 
 # Get SLAC Sequences
-
 data_dict = {}
 data_dict_DNA = {}
 data_dict_AA = {}
-
 
 for species in data["branch attributes"]["0"].keys():
   #print(species)
@@ -92,14 +92,21 @@ with open(args.output_dna, 'w') as handle:
         sp = k 
         molecule = data_dict_DNA[k].replace("---", "")
         print(">" + k + "\n" + molecule, file=handle)
+    #end for
+#end with
 
 with open(args.output_aa, 'w') as handle:
     for k in data_dict_AA:   
         print("# Writing:", k)
         molecule = data_dict_AA[k].replace("-", "")
         print(">" + k + "\n" + molecule, file=handle)
-    
+    #end for
+#end with
 
-
-
-#end for
+with open(args.output_msa, 'w') as handle:
+    for k in data_dict_DNA:
+        print("# Writing:", k)
+        sp = k
+        #molecule = data_dict_DNA[k].replace("---", "")
+        molecule = data_dict_DNA[k]
+        print(">" + k + "\n" + molecule, file=handle)
